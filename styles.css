@@ -17,7 +17,7 @@
 .section__container {
   max-width: var(--max-width);
   padding: 5rem 1rem;
-  /* margin: auto; */
+  margin: auto;
 }
 
 .section__subheader {
@@ -53,7 +53,7 @@ html,
 body {
   scroll-behavior: smooth;
   overflow-x: hidden;
-  background-color: #F8F4E8;
+  background-color: #FFF;
 }
 
 body {
@@ -69,7 +69,6 @@ nav {
   isolation: isolate;
   width: 100%;
   z-index: 9;
-  background-color: #F8F4E8;
 }
 
 .nav__header {
