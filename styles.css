@@ -64,15 +64,34 @@ body {
   background-color: #ffffff !important;
 }
 
+.shadow {
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.w-100 {
+  width: 100% !important;
+}
+
 nav {
-  position: fixed;
   isolation: isolate;
   width: 100%;
   z-index: 9;
+  padding: 10px;
+  position: fixed !important;
+  top: 0px;
+  background-color: #fff;
+  width: 100% !important;
+}
+
+.nav__container {
+  max-width: var(--max-width);
+  margin: auto;
+  display: flex;
+  align-items: center;
 }
 
 .nav__header {
-  padding: 10px 1rem;
+  padding: 0px;
   width: 100%;
   display: flex;
   align-items: center;
@@ -84,12 +103,15 @@ nav {
   font-size: 1.2rem;
   font-weight: 700;
   color: var(--text-dark);
+  display: block;
+  width: 150px;
 }
+
 .nav__logo a img {
-  width: 90px;
+  width: 100%;
 }
 .nav__menu__btn {
-  font-size: 2.5rem;
+  font-size: 2rem;
   color: var(--text-dark);
   cursor: pointer;
 }
@@ -127,22 +149,31 @@ nav {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: space-between;
+  justify-content: center;
   background-color: #f8f4e8;
-  padding: 4rem 2rem;
+  padding: 10rem 2rem;
+  padding-bottom: 5em;
   border-radius: 1rem;
   overflow: hidden;
   position: relative;
 }
 
 .hero-content {
-  width: 90%;
+  width: 40%;
   height: 70%;
   color: white;
   z-index: 2;
 }
 
-.hero-image {
+@media (max-width: 768px) {
+  .hero-content {
+    width: 100%;
+    height: 100%;
+    text-align: center;
+  }
+}
+
+/* .hero-image {
   position: relative;
   width: 100%;
   height: 500px;
@@ -162,7 +193,8 @@ nav {
     ),
     url("/assets/charity3.jpg") center center / cover no-repeat;
   border-radius: 0 1rem 1rem 0;
-}
+  border: 1px solid #f8f4e800;
+} */
 
 @media (min-width: 768px) {
   .hero-image {
@@ -299,6 +331,24 @@ nav {
 @media (max-width: 768px) {
   .service__flex {
     grid-template-columns: repeat(1, 1fr);
+  }
+}
+
+@media (min-width: 768px) {
+  .service__flex {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 884px) {
+  .service__flex {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (min-width: 1200px) {
+  .service__flex {
+    grid-template-columns: repeat(4, 1fr);
   }
 }
 
@@ -586,7 +636,6 @@ textarea{
   opacity: 1;
   border-radius: 1rem;
 }
-}
 
 .form button:hover{
   opacity: 0.9;
@@ -624,8 +673,6 @@ textarea{
 @media (width > 768px) {
   nav {
     position: static;
-    padding: 1rem;
-    max-width: var(--max-width);
     margin-inline: auto;
     display: flex;
     align-items: center;
