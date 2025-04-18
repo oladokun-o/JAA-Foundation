@@ -345,8 +345,36 @@ nav {
   align-items: center;
 }
 
+@media screen and (min-width: 884px){
+.biography_grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+}
+}
+
 .biography_grid .biography_image {
   width: 100%;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(90px, 1fr));
+  gap: 10px;
+}
+
+.biography_grid .biography_image img{
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  object-position: top;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+@media screen and (min-width: 768px) {
+  .biography_grid .biography_image {
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  }
+  .biography_grid .biography_image img{
+    height: 200px;
+  }
 }
 
 .biography_grid .biography_text {
@@ -656,11 +684,6 @@ textarea{
   .product__grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-  }
-
-  .biography_grid {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
   }
 
   .biography_grid .biography_image img {
