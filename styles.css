@@ -246,7 +246,7 @@ nav {
 
 .intro__card p {
   margin-bottom: 10px;
-  color: var(--text-light);
+  color: var(--text-dark);
 }
 
 .about__row {
@@ -316,7 +316,7 @@ nav {
 
 .product__card p {
   margin-bottom: 1rem;
-  color: var(--text-light);
+  color: var(--text-dark);
 }
 
 .service__flex {
@@ -429,7 +429,7 @@ nav {
 
 .biography_grid .biography_text {
   margin-bottom: 1rem;
-  color: var(--text-light);
+  color: var(--text-dark);
 }
 
 .footer__container {
