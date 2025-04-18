@@ -3,7 +3,7 @@
 :root {
   --primary-color: #2B482C;
   --text-dark: #3f3b57;
-  --text-light: #908ca3;
+  --text-light: #ffffff;
   --white: #ffffff;
   --max-width: 1200px;
 }
@@ -491,7 +491,7 @@ nav {
   padding: 0.25rem 1.5rem;
   outline: none;
   border: none;
-  color: var(--text-dark);
+  color: var(--text-light);
   font-size: 2rem;
   background-color: var(--primary-color);
   border-radius: 5rem;
@@ -509,7 +509,7 @@ nav {
   display: inline-block;
   padding: 5px 8px;
   font-size: 1.125rem;
-  color: var(--text-dark);
+  color: var(--text-light);
   background-color: var(--primary-color);
   border-radius: 100%;
 }
