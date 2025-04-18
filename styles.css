@@ -68,6 +68,12 @@ body {
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
+@media (min-width: 768px) {
+  .hide-shadow-lg {
+    box-shadow: none !important;
+  }
+}
+
 .w-100 {
   width: 100% !important;
 }
@@ -80,17 +86,26 @@ nav {
   top: 0px;
   background-color: #fff;
   width: 100% !important;
+  justify-content: center !important;
+}
+
+.nav_main_container {
+  max-width: var(--max-width);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  background-color: #ffffff;
 }
 
 .nav__container {
-  max-width: var(--max-width);
   margin: auto;
   display: flex;
   align-items: center;
-  padding: 10px;
   background-color: #fff;
   position: relative;
   z-index: 100;
+  padding: 10px;
 }
 
 .nav__header {
@@ -635,16 +650,25 @@ textarea{
   border: none;
   color: white;
   font-size: 18px;
-  width: 150px;
+  width: 100%;
   background: #2b482c;
   padding: 19px;
   opacity: 1;
   border-radius: 1rem;
+  cursor: pointer;
 }
 
 .form button:hover{
   opacity: 0.9;
+}
 
+/* Small size for submit button instead of full width on lg */
+@media (min-width: 768px) {
+  .form button {
+    width: auto;
+    margin-inline: auto;
+    padding: 19px 24px;
+  }
 }
 
 @media (width > 540px) {

@@ -88,7 +88,8 @@
 
   <body>
     <nav class="shadow">
-      <div class="w-100 nav__container">
+      <div class="w-100 nav_main_container">
+        <div class="w-100 nav__container">
         <div class="nav__header">
           <div class="nav__logo">
             <a href="#"
@@ -102,13 +103,14 @@
           </div>
         </div>
       </div>
-      <ul class="nav__links shadow" id="nav-links">
+      <ul class="nav__links shadow hide-shadow-lg" id="nav-links">
         <li><a href="#home">Home</a></li>
         <li><a href="#about">About</a></li>
         <li><a href="#vision">Vision</a></li>
         <li><a href="#trustees">Trustees</a></li>
         <li><a href="#contact">Contact</a></li>
       </ul>
+      </div>
     </nav>
 
     <section class="hero-section" id="home">
@@ -427,7 +429,9 @@
                     placeholder="Write your message here..."
                   ></textarea>
                 </div>
-                <button type="submit">Send Message</button>
+                <div class="w-100">
+                  <button type="submit">Send Message</button>
+                </div>
               </div>
             </form>
           </div>
