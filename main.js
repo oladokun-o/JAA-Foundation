@@ -89,3 +89,12 @@ ScrollReveal().reveal(".instagram__grid img", {
   duration: 1000,
   interval: 500,
 });
+
+
+function toggleBio() {
+  const bioText = document.getElementById('bioText');
+  const toggleBtn = document.querySelector('.see-more');
+
+  bioText.classList.toggle('expanded');
+  toggleBtn.textContent = bioText.classList.contains('expanded') ? 'Show Less' : 'See More';
+}
