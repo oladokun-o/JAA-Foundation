@@ -1,100 +1,168 @@
-const menuBtn = document.getElementById("menu-btn");
-const navLinks = document.getElementById("nav-links");
-const menuBtnIcon = menuBtn.querySelector("i");
+(() => {
+  // WhatsApp quick-contact ------------------------------------------------
+  // International format, digits only (e.g. "2348012345678"). While empty, the
+  // floating button and the contact-list entry stay hidden.
+  const WHATSAPP_NUMBER = "";
+  const WHATSAPP_MESSAGE = "Hello, I'd like to learn more about the Joseph Alabi Adewoye Foundation.";
 
-menuBtn.addEventListener("click", (e) => {
-  navLinks.classList.toggle("open");
-
-  const isOpen = navLinks.classList.contains("open");
-  menuBtnIcon.setAttribute("class", isOpen ? "ri-close-line" : "ri-menu-line");
-});
-
-navLinks.addEventListener("click", (e) => {
-  navLinks.classList.remove("open");
-  menuBtnIcon.setAttribute("class", "ri-menu-line");
-});
-
-const scrollRevealOption = {
-  distance: "50px",
-  origin: "bottom",
-  duration: 1000,
-};
-
-ScrollReveal().reveal(".header__content h4", {
-  ...scrollRevealOption,
-});
-ScrollReveal().reveal(".header__content h1", {
-  ...scrollRevealOption,
-  delay: 500,
-});
-ScrollReveal().reveal(".header__content h2", {
-  ...scrollRevealOption,
-  delay: 1000,
-});
-ScrollReveal().reveal(".header__content p", {
-  ...scrollRevealOption,
-  delay: 1500,
-});
-ScrollReveal().reveal(".header__btn", {
-  ...scrollRevealOption,
-  delay: 2000,
-});
-
-ScrollReveal().reveal(".intro__card", {
-  ...scrollRevealOption,
-  interval: 500,
-});
-
-ScrollReveal().reveal(
-  ".about__row:nth-child(3) .about__image img, .about__row:nth-child(5) .about__image img",
-  {
-    ...scrollRevealOption,
-    origin: "left",
+  if (WHATSAPP_NUMBER) {
+    const waUrl = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(WHATSAPP_MESSAGE)}`;
+    document.querySelectorAll("[data-whatsapp-link]").forEach((a) => (a.href = waUrl));
+    document.querySelectorAll("[data-whatsapp]").forEach((el) => (el.hidden = false));
   }
-);
-ScrollReveal().reveal(".about__row:nth-child(4) .about__image img", {
-  ...scrollRevealOption,
-  origin: "right",
-});
-ScrollReveal().reveal(".about__content span", {
-  ...scrollRevealOption,
-  delay: 500,
-});
-ScrollReveal().reveal(".about__content h4", {
-  ...scrollRevealOption,
-  delay: 1000,
-});
-ScrollReveal().reveal(".about__content", {
-  ...scrollRevealOption,
-  delay: 1500,
-});
 
-ScrollReveal().reveal(".product__card", {
-  ...scrollRevealOption,
-  interval: 500,
-});
+  // Mobile navigation ------------------------------------------------------
+  const header = document.getElementById("site-header");
+  const nav = document.getElementById("site-nav");
+  const toggle = document.getElementById("menu-toggle");
+  const toggleIcon = toggle.querySelector("i");
 
-ScrollReveal().reveal(".service__card", {
-  duration: 1000,
-  interval: 500,
-});
+  const setMenu = (open) => {
+    nav.classList.toggle("is-open", open);
+    toggle.setAttribute("aria-expanded", String(open));
+    toggle.setAttribute("aria-label", open ? "Close menu" : "Open menu");
+    toggleIcon.className = open ? "ri-close-line" : "ri-menu-line";
+  };
 
-const swiper = new Swiper(".swiper", {
-  slidesPerView: 3,
-  spaceBetween: 20,
-  loop: true,
-});
+  toggle.addEventListener("click", () => setMenu(!nav.classList.contains("is-open")));
+  nav.addEventListener("click", (e) => {
+    if (e.target.closest("a")) setMenu(false);
+  });
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape" && nav.classList.contains("is-open")) {
+      setMenu(false);
+      toggle.focus();
+    }
+  });
 
-ScrollReveal().reveal(".instagram__grid img", {
-  duration: 1000,
-  interval: 500,
-});
+  // Header shadow once the page scrolls
+  const onScroll = () => header.classList.toggle("is-scrolled", window.scrollY > 8);
+  onScroll();
+  window.addEventListener("scroll", onScroll, { passive: true });
 
+  // Highlight the nav link for the section in view
+  const navLinks = [...nav.querySelectorAll('a[href^="#"]:not(.btn)')];
+  // Observe every section (not just linked ones) so a link un-highlights when
+  // the reader moves into a section the nav doesn't list, e.g. the FAQ.
+  const sections = [...document.querySelectorAll("main section[id]")];
+  if ("IntersectionObserver" in window) {
+    const spy = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (!entry.isIntersecting) return;
+          navLinks.forEach((a) => a.classList.toggle("is-active", a.getAttribute("href") === `#${entry.target.id}`));
+        });
+      },
+      { rootMargin: "-45% 0px -50% 0px" }
+    );
+    sections.forEach((s) => spy.observe(s));
+  }
 
-function toggleBio() {
-  const bioText = document.getElementById('bioText');
-  const toggleBtn = document.querySelector('.see-more');
+  // Reveal on scroll -------------------------------------------------------
+  const revealEls = document.querySelectorAll("[data-reveal]");
+  revealEls.forEach((el) => {
+    if (el.dataset.revealDelay) el.style.setProperty("--reveal-delay", `${el.dataset.revealDelay}ms`);
+  });
+  if ("IntersectionObserver" in window) {
+    const reveal = new IntersectionObserver(
+      (entries, obs) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("is-visible");
+            obs.unobserve(entry.target);
+          }
+        });
+      },
+      { rootMargin: "0px 0px -10% 0px", threshold: 0.08 }
+    );
+    revealEls.forEach((el) => reveal.observe(el));
+  } else {
+    revealEls.forEach((el) => el.classList.add("is-visible"));
+  }
 
-  bioText.classList.toggle('expanded');
-  toggleBtn.textContent = bioText.classList.contains('expanded') ? 'Show Less' : 'See More';
-}
+  // Biography expand / collapse -------------------------------------------
+  const bioText = document.getElementById("bio-text");
+  const bioToggle = document.getElementById("bio-toggle");
+  bioToggle.addEventListener("click", () => {
+    const expanded = bioText.classList.toggle("is-expanded");
+    bioToggle.setAttribute("aria-expanded", String(expanded));
+    bioToggle.querySelector("span").textContent = expanded ? "Show less" : "Read full biography";
+    if (!expanded) bioText.scrollIntoView({ block: "nearest" });
+  });
+
+  // Lightbox --------------------------------------------------------------
+  const lightbox = document.getElementById("lightbox");
+  const lightboxImg = lightbox.querySelector("img");
+  if (typeof lightbox.showModal === "function") {
+    document.querySelectorAll("[data-lightbox]").forEach((trigger) => {
+      trigger.addEventListener("click", () => {
+        const thumb = trigger.querySelector("img");
+        lightboxImg.src = trigger.dataset.lightbox;
+        lightboxImg.alt = thumb ? thumb.alt : "";
+        lightbox.showModal();
+      });
+    });
+    lightbox.querySelector(".lightbox__close").addEventListener("click", () => lightbox.close());
+    // Clicking the backdrop (the dialog itself, outside the image) closes it
+    lightbox.addEventListener("click", (e) => {
+      if (e.target === lightbox) lightbox.close();
+    });
+  }
+
+  // Contact form (sent through the /api/contact Netlify Function → Resend) --
+  const form = document.getElementById("contact-form");
+  const status = form.querySelector(".form-status");
+  const submitBtn = form.querySelector('button[type="submit"]');
+  const submitLabel = submitBtn.querySelector(".btn__label");
+
+  const setStatus = (msg, kind) => {
+    status.textContent = msg;
+    status.classList.toggle("is-success", kind === "success");
+    status.classList.toggle("is-error", kind === "error");
+  };
+
+  form.addEventListener("submit", async (e) => {
+    e.preventDefault();
+
+    const fields = [...form.querySelectorAll("input[required], textarea[required]")];
+    let firstInvalid = null;
+    fields.forEach((f) => {
+      const valid = f.checkValidity() && f.value.trim() !== "";
+      f.setAttribute("aria-invalid", String(!valid));
+      if (!valid && !firstInvalid) firstInvalid = f;
+    });
+    if (firstInvalid) {
+      setStatus("Please fill in every field with a valid email address.", "error");
+      firstInvalid.focus();
+      return;
+    }
+
+    submitBtn.disabled = true;
+    submitLabel.textContent = "Sending…";
+    setStatus("", null);
+
+    try {
+      const res = await fetch(form.action, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(Object.fromEntries(new FormData(form))),
+      });
+      const data = await res.json().catch(() => ({}));
+      if (!res.ok) throw new Error(data.error || "Something went wrong.");
+      form.reset();
+      fields.forEach((f) => f.removeAttribute("aria-invalid"));
+      setStatus("Thank you! Your message has been sent. We'll be in touch soon.", "success");
+    } catch (err) {
+      setStatus(
+        `${err.message} You can also email us directly at adewoyefoundation@gmail.com.`,
+        "error"
+      );
+    } finally {
+      submitBtn.disabled = false;
+      submitLabel.textContent = "Send message";
+    }
+  });
+
+  // Footer year
+  document.getElementById("year").textContent = new Date().getFullYear();
+})();
