@@ -6,10 +6,14 @@
   const hasIO = "IntersectionObserver" in window;
 
   // WhatsApp quick-contact ------------------------------------------------
-  // Number comes from the WHATSAPP_NUMBER env var on Netlify, written into
-  // /config.js at deploy time (tools/write-config.mjs). While empty, every
-  // [data-whatsapp] element (top bar, contact list, floating button) stays hidden.
-  const WHATSAPP_NUMBER = String((window.JAA_CONFIG && window.JAA_CONFIG.whatsappNumber) || "").replace(/\D/g, "");
+  // The foundation's number is the default. A WHATSAPP_NUMBER env var on Netlify
+  // overrides it (written into /config.js at deploy by tools/write-config.mjs).
+  // Every [data-whatsapp] element (top bar, contact list, floating button) is
+  // un-hidden once a number is known.
+  const DEFAULT_WHATSAPP_NUMBER = "2348051888116";
+  const WHATSAPP_NUMBER = String(
+    (window.JAA_CONFIG && window.JAA_CONFIG.whatsappNumber) || DEFAULT_WHATSAPP_NUMBER
+  ).replace(/\D/g, "");
   const WHATSAPP_MESSAGE = "Hello, I'd like to learn more about the Joseph Alabi Adewoye Foundation.";
 
   if (WHATSAPP_NUMBER) {

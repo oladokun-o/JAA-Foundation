@@ -26,7 +26,7 @@ There is no package manager or test suite. The site is plain HTML/CSS/JS, one Ne
   - The motion section at the end is switched off by `prefers-reduced-motion`.
 - `main.js`: shared by all pages. Every feature checks its elements exist before running.
   - Scroll reveals use `[data-reveal]`, or `[data-stagger]` on a container to reveal its children in turn. Reveal styles only apply under `html.js`, so content is visible without JS.
-- `config.js`: generated on deploy by `tools/write-config.mjs` from Netlify env vars (currently `WHATSAPP_NUMBER`). The committed copy is the empty local default. Every `[data-whatsapp]` element stays `hidden` until a number is set.
+- `config.js`: generated on deploy by `tools/write-config.mjs` from Netlify env vars. The committed copy is the empty local default. WhatsApp uses `DEFAULT_WHATSAPP_NUMBER` in `main.js` (2348051888116) unless a `WHATSAPP_NUMBER` env var overrides it.
 - `netlify/functions/contact.mjs` (`POST /api/contact`):
   - Sends the message through Resend's REST API, then a best-effort confirmation to the visitor. The confirmation deliberately doesn't echo the message back.
   - Spam is blocked with a honeypot field named `company`.
