@@ -7,7 +7,7 @@
 //   CONTACT_FROM_EMAIL optional, must be on a domain verified in Resend
 
 const DEFAULT_TO = "adewoyefoundation@gmail.com";
-const DEFAULT_FROM = "JAA Foundation <noreply@updates.nxtedgestudio.com>";
+const DEFAULT_FROM = "JAA Foundation <noreply@send.nxtedgestudio.com>";
 const SITE_URL = "https://adewoyefoundation.org";
 
 const json = (body, status = 200) =>

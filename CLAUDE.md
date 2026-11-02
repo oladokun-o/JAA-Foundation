@@ -21,7 +21,7 @@ There is no package manager, build, linter or test suite. The site is plain HTML
 - `main.js`: a single IIFE with no dependencies. It handles the mobile menu, the scroll-spy that highlights the current nav link, scroll reveals (any element with `data-reveal` / `data-reveal-delay`), the biography expand toggle, the `<dialog>` lightbox (`data-lightbox="<src>"`) and the contact-form submit.
   - Reveal styles only apply when `html.js` is set, which an inline script in `<head>` does, so content stays visible without JS.
 - `netlify/functions/contact.mjs`: `POST /api/contact`. It sends the message to the foundation through Resend's REST API (plain `fetch`, no SDK), then sends a best-effort confirmation to the visitor. The confirmation deliberately does not echo the message back. Spam is blocked with a honeypot field named `company`.
-  - Environment variables: `RESEND_API_KEY` (required), `CONTACT_TO_EMAIL` (default `adewoyefoundation@gmail.com`), `CONTACT_FROM_EMAIL` (default `noreply@updates.nxtedgestudio.com`, Nxtedge's verified Resend domain).
+  - Environment variables: `RESEND_API_KEY` (required), `CONTACT_TO_EMAIL` (default `adewoyefoundation@gmail.com`), `CONTACT_FROM_EMAIL` (default `noreply@send.nxtedgestudio.com`, Nxtedge's verified Resend domain).
 
 ## Conventions
 
