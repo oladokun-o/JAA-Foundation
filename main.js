@@ -59,6 +59,15 @@
   }
 
   // Reveal on scroll -------------------------------------------------------
+  // [data-stagger] containers reveal their children one after another.
+  document.querySelectorAll("[data-stagger]").forEach((group) => {
+    [...group.children].forEach((child, i) => {
+      if (child.hidden) return;
+      child.setAttribute("data-reveal", "");
+      child.dataset.revealDelay = String(Math.min(i * 90, 540));
+    });
+  });
+
   const revealEls = document.querySelectorAll("[data-reveal]");
   revealEls.forEach((el) => {
     if (el.dataset.revealDelay) el.style.setProperty("--reveal-delay", `${el.dataset.revealDelay}ms`);
@@ -68,8 +77,23 @@
       (entries, obs) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
-            entry.target.classList.add("is-visible");
-            obs.unobserve(entry.target);
+            const el = entry.target;
+            el.classList.add("is-visible");
+            obs.unobserve(el);
+            // Once revealed, drop the reveal styles so the element's own hover
+            // transitions (lifts, zooms) aren't overridden or delayed by them.
+            // .is-visible stays, since some effects (timeline, photo wipes) key off it.
+            const done = () => el.removeAttribute("data-reveal");
+            const delay = parseInt(el.dataset.revealDelay || "0", 10);
+            el.addEventListener(
+              "transitionend",
+              function onEnd(e) {
+                if (e.target !== el || e.propertyName !== "transform") return;
+                el.removeEventListener("transitionend", onEnd);
+                done();
+              }
+            );
+            setTimeout(done, delay + 1500);
           }
         });
       },

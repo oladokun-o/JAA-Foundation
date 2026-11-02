@@ -320,6 +320,7 @@
   </div>
 
   <header class="site-header" id="site-header">
+    <div class="scroll-progress" aria-hidden="true"></div>
     <div class="container site-header__inner">
       <a class="brand" href="#home" aria-label="Joseph Alabi Adewoye Foundation — home">
         <img src="assets/logo-text.png" alt="Joseph Alabi Adewoye Foundation" width="776" height="265" />
@@ -346,7 +347,7 @@
     <!-- Hero -->
     <section class="hero" id="home">
       <div class="container hero__grid">
-        <div class="hero__copy" data-reveal>
+        <div class="hero__copy">
           <p class="eyebrow">Established in his honour</p>
           <h1 class="hero__title">A legacy of art, learning and community, <em>carried forward.</em></h1>
           <p class="hero__lead">
@@ -374,7 +375,7 @@
           </dl>
         </div>
 
-        <div class="hero__media" data-reveal data-reveal-delay="150">
+        <div class="hero__media">
           <figure class="hero__portrait">
             <img src="assets/IMG-20250417-WA0006.jpg" alt="Portrait of Mr. Joseph Alabi Adewoye at his desk"
               width="540" height="779" fetchpriority="high" />
@@ -393,7 +394,7 @@
 
     <!-- Focus strip -->
     <section class="pillars" aria-label="Areas of focus">
-      <div class="container pillars__grid">
+      <div class="container pillars__grid" data-stagger>
         <div class="pillar"><i class="ri-book-open-line" aria-hidden="true"></i><span>Education</span></div>
         <div class="pillar"><i class="ri-user-star-line" aria-hidden="true"></i><span>Youth empowerment</span></div>
         <div class="pillar"><i class="ri-palette-line" aria-hidden="true"></i><span>Arts &amp; culture</span></div>
@@ -511,7 +512,7 @@
             </button>
           </div>
 
-          <ol class="timeline" data-reveal data-reveal-delay="100" aria-label="Milestones">
+          <ol class="timeline" data-reveal data-stagger aria-label="Milestones">
             <li><span class="timeline__year">1959</span><span>Provincial Secondary School, Ilorin</span></li>
             <li><span class="timeline__year">1965</span><span>B.A. Fine Arts, Ahmadu Bello University</span></li>
             <li><span class="timeline__year">1968</span><span>Heads the Graphic Art Section, Kwara State Military
@@ -540,7 +541,7 @@
           </figcaption>
         </figure>
 
-        <div class="gallery" data-reveal>
+        <div class="gallery" data-stagger>
           <button type="button" class="gallery__item" data-lightbox="assets/IMG-20250417-WA0007.jpg"
             aria-label="View larger photo">
             <img src="assets/IMG-20250417-WA0007.jpg" alt="Mr. Joseph Alabi Adewoye in London" width="382"
@@ -637,7 +638,7 @@
           <p>Quick answers about the foundation and the man it honours. Can't find what you're looking for?
             <a href="#contact">Get in touch</a>.</p>
         </div>
-        <div class="faq__list" data-reveal data-reveal-delay="100">
+        <div class="faq__list" data-stagger>
           <details class="faq__item" open>
             <summary><span>What is the Joseph Alabi Adewoye Foundation?</span><i class="ri-add-line" aria-hidden="true"></i></summary>
             <p>The Joseph Alabi Adewoye Foundation is a non-governmental organisation established to honour the legacy of Mr. Joseph Alabi Adewoye, a pioneering artist, educator and community advocate. It advances human and environmental development in Ijara-Isin and surrounding communities in Kwara State, Nigeria.</p>
@@ -680,7 +681,7 @@
             Whether you'd like to partner on a project, support our programmes or learn more about the foundation's
             work, we'd love to hear from you.
           </p>
-          <ul class="contact__list">
+          <ul class="contact__list" data-stagger>
             <li>
               <span class="contact__icon"><i class="ri-map-pin-2-line" aria-hidden="true"></i></span>
               <div>

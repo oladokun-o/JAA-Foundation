@@ -1466,3 +1466,374 @@ html:not(.js) .link-btn {
     top: calc(var(--header-h) + 2rem);
   }
 }
+
+/* ==========================================================================
+   Motion. Calm and unhurried to suit a memorial foundation. Everything here
+   is neutralised by the prefers-reduced-motion block above (durations → 0).
+   ========================================================================== */
+
+:root {
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  interpolate-size: allow-keywords;
+}
+
+/* Scroll progress: thin gold line under the sticky nav (CSS scroll timeline) */
+.scroll-progress {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -1px;
+  height: 2px;
+  background: linear-gradient(90deg, var(--gold), #d9c08a);
+  transform-origin: left;
+  transform: scaleX(0);
+  pointer-events: none;
+}
+
+@supports (animation-timeline: scroll()) {
+  .scroll-progress {
+    animation: progress-grow linear both;
+    animation-timeline: scroll(root block);
+  }
+}
+
+@keyframes progress-grow {
+  to {
+    transform: scaleX(1);
+  }
+}
+
+/* Hero entrance on load ---------------------------------------------------- */
+
+@keyframes rise-in {
+  from {
+    opacity: 0;
+    transform: translateY(26px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes arch-reveal {
+  from {
+    clip-path: inset(100% 0 0 0 round 999px 999px var(--radius) var(--radius));
+  }
+  to {
+    clip-path: inset(0 0 0 0 round 999px 999px var(--radius) var(--radius));
+  }
+}
+
+@keyframes settle {
+  from {
+    transform: scale(1.14);
+  }
+  to {
+    transform: scale(1);
+  }
+}
+
+@keyframes pop-in {
+  from {
+    opacity: 0;
+    transform: translateY(18px) scale(0.92);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes float {
+  0%,
+  100% {
+    translate: 0 0;
+  }
+  50% {
+    translate: 0 -8px;
+  }
+}
+
+.js .hero__copy > * {
+  animation: rise-in 1s var(--ease-out) both;
+}
+
+.js .hero__copy > :nth-child(1) { animation-delay: 0.1s; }
+.js .hero__copy > :nth-child(2) { animation-delay: 0.22s; }
+.js .hero__copy > :nth-child(3) { animation-delay: 0.38s; }
+.js .hero__copy > :nth-child(4) { animation-delay: 0.52s; }
+.js .hero__copy > :nth-child(5) { animation-delay: 0.66s; }
+
+.js .hero__portrait {
+  animation: arch-reveal 1.4s var(--ease-out) 0.2s both;
+}
+
+.js .hero__portrait img {
+  animation: settle 2.4s var(--ease-out) 0.2s both;
+}
+
+.js .hero__inset {
+  animation: pop-in 0.9s var(--ease-out) 0.9s both, float 7s ease-in-out 2s infinite;
+}
+
+.js .hero__tag {
+  animation: pop-in 0.9s var(--ease-out) 1.1s both, float 8s ease-in-out 2.4s infinite reverse;
+}
+
+/* Hero eyebrow rule draws in */
+.js .hero__copy .eyebrow::before {
+  transform-origin: left;
+  animation: line-draw 0.9s var(--ease-out) 0.4s both;
+}
+
+@keyframes line-draw {
+  from {
+    transform: scaleX(0);
+  }
+  to {
+    transform: scaleX(1);
+  }
+}
+
+/* Scroll reveals: refinements --------------------------------------------- */
+
+.js [data-reveal] {
+  transition-duration: 0.9s;
+  transition-timing-function: var(--ease-out);
+}
+
+/* Eyebrow rules draw in when their section appears */
+.js [data-reveal] .eyebrow::before,
+.js [data-reveal] .eyebrow::after {
+  transform: scaleX(0);
+  transition: transform 0.9s var(--ease-out) 0.35s;
+}
+
+.js [data-reveal] .eyebrow::before {
+  transform-origin: right;
+}
+
+.js [data-reveal] .eyebrow::after {
+  transform-origin: left;
+}
+
+.js [data-reveal].is-visible .eyebrow::before,
+.js [data-reveal].is-visible .eyebrow::after {
+  transform: scaleX(1);
+}
+
+/* About photos wipe up into place, the second one a beat later */
+.js .about__media img {
+  clip-path: inset(100% 0 0 0 round var(--radius));
+  transition: clip-path 1.3s var(--ease-out);
+}
+
+.js .about__media .about__media-secondary {
+  transition-delay: 0.35s;
+}
+
+.js .about__media.is-visible img {
+  clip-path: inset(0 0 0 0 round var(--radius));
+}
+
+/* Archive feature photo: soft zoom-out as it appears */
+.js .feature-photo .feature-photo__frame img {
+  transform: scale(1.08);
+  transition: transform 1.6s var(--ease-out);
+}
+
+.js .feature-photo.is-visible .feature-photo__frame img {
+  transform: scale(1);
+}
+
+.js .feature-photo.is-visible .feature-photo__frame:hover img {
+  transform: scale(1.03);
+}
+
+/* Timeline: the line draws down, then each milestone follows */
+.js .timeline::before {
+  transform: scaleY(0);
+  transform-origin: top;
+  transition: transform 1.6s var(--ease-out) 0.15s;
+}
+
+.js .timeline.is-visible::before {
+  transform: scaleY(1);
+}
+
+.js .timeline li::before {
+  transform: scale(0);
+  transition: transform 0.5s var(--ease-out) calc(var(--reveal-delay, 0ms) + 0.25s);
+}
+
+.js .timeline li.is-visible::before {
+  transform: scale(1);
+}
+
+/* Trustee photos lift slightly on hover */
+.trustee {
+  transition: transform 0.5s var(--ease-out);
+}
+
+.trustee:hover {
+  transform: translateY(-4px);
+}
+
+/* Small interaction details ----------------------------------------------- */
+
+.btn i {
+  transition: transform 0.3s var(--ease-out);
+}
+
+.btn:hover i.ri-arrow-right-line,
+.btn:hover i.ri-send-plane-line {
+  transform: translateX(3px);
+}
+
+.purpose-card__icon {
+  transition: transform 0.5s var(--ease-out), background-color 0.3s;
+}
+
+.purpose-card:hover .purpose-card__icon {
+  transform: rotate(-8deg) scale(1.08);
+  background: #d9c08a;
+}
+
+.pillar i {
+  transition: transform 0.4s var(--ease-out);
+}
+
+.pillar:hover i {
+  transform: translateY(-3px) scale(1.12);
+}
+
+.contact__icon {
+  transition: transform 0.4s var(--ease-out), background-color 0.3s;
+}
+
+.contact__list li:hover .contact__icon {
+  transform: scale(1.08);
+  background: var(--sand);
+}
+
+.field input,
+.field textarea {
+  transition: border-color 0.25s, box-shadow 0.25s, background-color 0.25s, transform 0.25s var(--ease-out);
+}
+
+.form-status:not(:empty) {
+  animation: rise-in 0.5s var(--ease-out) both;
+}
+
+/* Mobile menu: links cascade in */
+@media (max-width: 899px) {
+  .site-nav li {
+    opacity: 0;
+    transform: translateY(-8px);
+    transition: opacity 0.35s var(--ease-out), transform 0.35s var(--ease-out);
+  }
+
+  .site-nav.is-open li {
+    opacity: 1;
+    transform: none;
+  }
+
+  .site-nav.is-open li:nth-child(1) { transition-delay: 0.04s; }
+  .site-nav.is-open li:nth-child(2) { transition-delay: 0.08s; }
+  .site-nav.is-open li:nth-child(3) { transition-delay: 0.12s; }
+  .site-nav.is-open li:nth-child(4) { transition-delay: 0.16s; }
+  .site-nav.is-open li:nth-child(5) { transition-delay: 0.2s; }
+
+  .menu-toggle i {
+    transition: transform 0.35s var(--ease-out);
+  }
+
+  .menu-toggle[aria-expanded="true"] i {
+    transform: rotate(90deg);
+  }
+}
+
+/* FAQ: answers open and close smoothly (Chromium; elsewhere they just fade) */
+.faq__item::details-content {
+  block-size: 0;
+  overflow: clip;
+  transition: block-size 0.45s var(--ease-out), content-visibility 0.45s allow-discrete;
+}
+
+.faq__item[open]::details-content {
+  block-size: auto;
+}
+
+.faq__item[open] p {
+  animation: rise-in 0.5s var(--ease-out) both;
+}
+
+.faq__item summary span {
+  transition: color 0.25s;
+}
+
+.faq__item summary:hover span {
+  color: var(--forest);
+}
+
+/* Lightbox: image scales up gently, backdrop fades */
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+}
+
+@keyframes zoom-in {
+  from {
+    opacity: 0;
+    transform: scale(0.94);
+  }
+}
+
+.lightbox[open] img {
+  animation: zoom-in 0.45s var(--ease-out) both;
+}
+
+.lightbox[open]::backdrop {
+  animation: fade-in 0.35s ease both;
+}
+
+/* WhatsApp button slides in shortly after load, then pulses once */
+@keyframes wa-in {
+  from {
+    opacity: 0;
+    transform: translateY(24px) scale(0.9);
+  }
+}
+
+@keyframes wa-ring {
+  0% {
+    box-shadow: 0 12px 30px -10px rgba(16, 80, 40, 0.55), 0 0 0 0 rgba(31, 157, 85, 0.45);
+  }
+  100% {
+    box-shadow: 0 12px 30px -10px rgba(16, 80, 40, 0.55), 0 0 0 16px rgba(31, 157, 85, 0);
+  }
+}
+
+.wa-fab {
+  animation: wa-in 0.7s var(--ease-out) 1.6s both, wa-ring 1.6s ease-out 2.4s 2;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .scroll-progress {
+    display: none;
+  }
+
+  .js .about__media img,
+  .js .timeline::before,
+  .js .timeline li::before {
+    clip-path: none;
+    transform: none;
+  }
+
+  .js .hero__inset,
+  .js .hero__tag {
+    animation: none;
+  }
+}
