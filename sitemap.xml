@@ -28,4 +28,22 @@
       <image:loc>https://adewoyefoundation.org/assets/Logo-main.png</image:loc>
     </image:image>
   </url>
+  <url>
+    <loc>https://adewoyefoundation.org/privacy/</loc>
+    <lastmod>2026-11-02</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.3</priority>
+  </url>
+  <url>
+    <loc>https://adewoyefoundation.org/terms/</loc>
+    <lastmod>2026-11-02</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.3</priority>
+  </url>
+  <url>
+    <loc>https://adewoyefoundation.org/accessibility/</loc>
+    <lastmod>2026-11-02</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.3</priority>
+  </url>
 </urlset>

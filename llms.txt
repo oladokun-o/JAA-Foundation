@@ -24,3 +24,6 @@
 
 - [Home](https://adewoyefoundation.org/): the foundation, its purpose, Mr. Adewoye's biography, the trustees and contact details.
 - [FAQ](https://adewoyefoundation.org/#faq): common questions about the foundation's registration, location, focus, trustees and how to partner.
+- [Privacy policy](https://adewoyefoundation.org/privacy/): what personal data the website collects (contact-form messages only; no cookies or tracking) and rights under the Nigeria Data Protection Act 2023.
+- [Terms of use](https://adewoyefoundation.org/terms/): conditions for using the website and its content, including the archive photographs.
+- [Accessibility statement](https://adewoyefoundation.org/accessibility/): WCAG 2.2 AA commitment and how to report a problem.

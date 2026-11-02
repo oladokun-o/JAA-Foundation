@@ -2,13 +2,40 @@
    Joseph Alabi Adewoye Foundation — built by Nxtedge Studio
    ========================================================================== */
 
+/* Fonts (self-hosted variable fonts, SIL OFL; licences in assets/fonts) ---- */
+
+@font-face {
+  font-family: "Inter";
+  src: url("/assets/fonts/inter-var.woff2") format("woff2");
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Cormorant Garamond";
+  src: url("/assets/fonts/cormorant-garamond-var.woff2") format("woff2");
+  font-weight: 300 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Cormorant Garamond";
+  src: url("/assets/fonts/cormorant-garamond-var-italic.woff2") format("woff2");
+  font-weight: 300 700;
+  font-style: italic;
+  font-display: swap;
+}
+
 :root {
   --forest: #2b482c;
   --forest-deep: #1c311d;
   --forest-soft: #e7ede4;
   --cream: #f8f4e8;
   --sand: #ece4cf;
-  --gold: #a9833a;
+  --gold: #a9833a; /* decorative only: lines, dots, borders */
+  --gold-text: #7d5f22; /* gold for text: ≥4.5:1 on white, cream and green tints */
   --ink: #1d241d;
   --muted: #5a6457;
   --line: rgba(29, 36, 29, 0.12);
@@ -122,7 +149,7 @@ textarea {
   font-weight: 600;
   letter-spacing: 0.16em;
   text-transform: uppercase;
-  color: var(--gold);
+  color: var(--gold-text);
 }
 
 .eyebrow::before {
@@ -982,7 +1009,7 @@ html:not(.js) .link-btn {
 
 .trustee--memorial p {
   font-style: italic;
-  color: var(--gold);
+  color: var(--gold-text);
 }
 
 .trustee__ribbon {
@@ -1233,7 +1260,7 @@ html:not(.js) .link-btn {
 
 @media (min-width: 768px) {
   .footer__grid {
-    grid-template-columns: 1.4fr 1fr 1.2fr;
+    grid-template-columns: 1.5fr 1fr 1.3fr 1fr;
     gap: 3rem;
   }
 }
@@ -1836,4 +1863,272 @@ html:not(.js) .link-btn {
   .js .hero__tag {
     animation: none;
   }
+}
+
+/* Form privacy note */
+.form-note {
+  font-size: 0.85rem;
+  color: var(--muted);
+}
+
+.form-note a {
+  color: var(--forest);
+  text-underline-offset: 3px;
+}
+
+/* ==========================================================================
+   Sub-pages: legal pages (privacy, terms, accessibility) and status pages
+   (404, error, message sent)
+   ========================================================================== */
+
+.page-hero {
+  background: radial-gradient(900px 360px at 90% 0%, rgba(169, 131, 58, 0.12), transparent 60%), var(--cream);
+  padding-block: clamp(3rem, 7vw, 5rem) clamp(2.5rem, 5vw, 3.5rem);
+  border-bottom: 1px solid var(--line);
+}
+
+.page-hero__title {
+  margin-top: 0.75rem;
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: clamp(2.4rem, 5.5vw, 3.75rem);
+  line-height: 1.05;
+  color: var(--forest-deep);
+}
+
+.page-hero__lead {
+  margin-top: 1rem;
+  max-width: 44rem;
+  font-size: 1.075rem;
+  color: var(--muted);
+}
+
+.page-hero__meta {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  margin-top: 1.5rem;
+  font-size: 0.85rem;
+  color: var(--muted);
+}
+
+.legal {
+  display: grid;
+  gap: 2.5rem;
+  padding-block: clamp(2.5rem, 6vw, 4.5rem) clamp(4rem, 8vw, 6rem);
+}
+
+.legal__toc {
+  padding: 1.25rem 1.5rem;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: #fcfbf7;
+  font-size: 0.925rem;
+}
+
+.legal__toc-title {
+  margin-bottom: 0.5rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--gold-text);
+}
+
+.legal__toc ol {
+  list-style: none;
+  display: grid;
+  gap: 0.15rem;
+  counter-reset: toc;
+}
+
+.legal__toc a {
+  display: block;
+  padding: 0.3rem 0;
+  color: var(--muted);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.legal__toc a:hover {
+  color: var(--forest);
+}
+
+@media (min-width: 900px) {
+  .legal {
+    grid-template-columns: 260px minmax(0, 1fr);
+    gap: 4.5rem;
+    align-items: start;
+  }
+
+  .legal__toc {
+    position: sticky;
+    top: calc(var(--header-h) + 1.5rem);
+  }
+}
+
+.prose {
+  max-width: 46rem;
+  color: var(--ink);
+}
+
+.prose section + section {
+  margin-top: 2.5rem;
+}
+
+.prose h2 {
+  font-family: var(--font-display);
+  font-size: clamp(1.6rem, 3vw, 2rem);
+  font-weight: 600;
+  line-height: 1.2;
+  color: var(--forest-deep);
+  scroll-margin-top: calc(var(--header-h) + 1rem);
+}
+
+.prose p,
+.prose ul {
+  margin-top: 0.9rem;
+  color: #3c4639;
+}
+
+.prose ul {
+  list-style: none;
+  display: grid;
+  gap: 0.55rem;
+}
+
+.prose ul li {
+  position: relative;
+  padding-left: 1.4rem;
+}
+
+.prose ul li::before {
+  content: "";
+  position: absolute;
+  left: 0.2rem;
+  top: 0.7em;
+  width: 6px;
+  height: 6px;
+  border-radius: 999px;
+  background: var(--gold);
+}
+
+.prose a {
+  color: var(--forest);
+  font-weight: 500;
+  text-underline-offset: 3px;
+  word-break: break-word;
+}
+
+.prose strong {
+  color: var(--ink);
+}
+
+.legal__summary {
+  margin-bottom: 2.75rem;
+  padding: 1.5rem 1.75rem;
+  border-radius: var(--radius);
+  background: var(--forest-soft);
+  border: 1px solid rgba(43, 72, 44, 0.15);
+}
+
+.legal__summary .legal__summary-title {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: var(--font-body);
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--forest-deep);
+}
+
+.legal__summary ul {
+  margin-top: 0.75rem;
+}
+
+/* Status pages ------------------------------------------------------------ */
+
+.status {
+  background: radial-gradient(800px 400px at 50% 0%, rgba(169, 131, 58, 0.12), transparent 65%), var(--cream);
+}
+
+.status__inner {
+  display: grid;
+  justify-items: center;
+  text-align: center;
+  padding-block: clamp(4rem, 12vw, 8rem);
+  max-width: 44rem;
+}
+
+.status__code {
+  font-family: var(--font-display);
+  font-size: clamp(5rem, 16vw, 9rem);
+  font-weight: 600;
+  line-height: 0.9;
+  color: rgba(43, 72, 44, 0.14);
+}
+
+.status__code:empty {
+  display: none;
+}
+
+.status__icon {
+  display: grid;
+  place-items: center;
+  width: 64px;
+  height: 64px;
+  margin-top: -1.25rem;
+  border-radius: 999px;
+  background: var(--white);
+  box-shadow: var(--shadow);
+  color: var(--forest);
+  font-size: 1.75rem;
+  animation: pop-in 0.7s var(--ease-out, ease) both;
+}
+
+.status__code:empty + .status__icon {
+  margin-top: 0;
+}
+
+.status__title {
+  margin-top: 1.5rem;
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 5vw, 3rem);
+  font-weight: 600;
+  line-height: 1.1;
+  color: var(--forest-deep);
+}
+
+.status__lead {
+  margin-top: 1rem;
+  color: var(--muted);
+}
+
+.status__lead a {
+  color: var(--forest);
+  text-underline-offset: 3px;
+}
+
+.status__actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.75rem;
+  margin-top: 2rem;
+}
+
+.status__links {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.5rem 1.5rem;
+  margin-top: 2.5rem;
+  padding-top: 1.75rem;
+  border-top: 1px solid var(--line);
+  font-size: 0.925rem;
+}
+
+.status__links a {
+  color: var(--forest);
+  text-underline-offset: 3px;
 }

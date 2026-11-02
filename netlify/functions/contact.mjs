@@ -16,6 +16,10 @@ const json = (body, status = 200) =>
     headers: { "Content-Type": "application/json", "Cache-Control": "no-store" },
   });
 
+// 303 so the browser follows with a GET to the page.
+const redirect = (req, path) =>
+  new Response(null, { status: 303, headers: { Location: new URL(path, req.url).toString() } });
+
 const escapeHtml = (s) =>
   String(s)
     .replace(/&/g, "&amp;")
@@ -80,21 +84,28 @@ async function sendEmail(apiKey, payload) {
 export default async (req) => {
   if (req.method !== "POST") return json({ error: "Method not allowed." }, 405);
 
+  // The page normally submits JSON via fetch. Without JS the browser posts the
+  // form itself; those requests get redirected to a page instead of JSON.
+  const type = req.headers.get("content-type") || "";
+  const isFormPost = type.includes("application/x-www-form-urlencoded") || type.includes("multipart/form-data");
+  const succeed = () => (isFormPost ? redirect(req, "/message-sent/") : json({ success: true }));
+  const fail = (error, status) => (isFormPost ? redirect(req, "/error/?from=contact") : json({ error }, status));
+
   const apiKey = process.env.RESEND_API_KEY;
   if (!apiKey) {
     console.error("contact: RESEND_API_KEY is not set");
-    return json({ error: "Our message service is temporarily unavailable." }, 503);
+    return fail("Our message service is temporarily unavailable.", 503);
   }
 
   let data;
   try {
-    data = await req.json();
+    data = isFormPost ? Object.fromEntries(await req.formData()) : await req.json();
   } catch {
-    return json({ error: "Invalid request." }, 400);
+    return fail("Invalid request.", 400);
   }
 
   // Honeypot: bots fill the hidden "company" field. Pretend success, send nothing.
-  if (data.company) return json({ success: true });
+  if (data.company) return succeed();
 
   const firstName = String(data.firstName ?? "").trim().slice(0, 80);
   const lastName = String(data.lastName ?? "").trim().slice(0, 80);
@@ -102,7 +113,7 @@ export default async (req) => {
   const message = String(data.message ?? "").trim().slice(0, 5000);
 
   if (!firstName || !lastName || !message || !EMAIL_RE.test(email)) {
-    return json({ error: "Please fill in every field with a valid email address." }, 400);
+    return fail("Please fill in every field with a valid email address.", 400);
   }
 
   const name = `${firstName} ${lastName}`;
@@ -130,7 +141,7 @@ export default async (req) => {
     });
   } catch (err) {
     console.error("contact: notification failed", err);
-    return json({ error: "We couldn't send your message right now." }, 502);
+    return fail("We couldn't send your message right now.", 502);
   }
 
   // Courtesy confirmation to the sender. Best-effort: the foundation already has
@@ -158,7 +169,7 @@ export default async (req) => {
     console.error("contact: confirmation failed", err);
   }
 
-  return json({ success: true });
+  return succeed();
 };
 
 export const config = { path: "/api/contact" };
